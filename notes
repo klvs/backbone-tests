@@ -1,0 +1,12 @@
+	initialize: function(){
+		console.log(this.get('Name') + 'has been initialized');
+		this.on('change:ID', function(){
+			if(this.hasChanged('ID')){
+				console.log('ID has changed');
+			}
+			// never reached
+			if(this.hasChanged('Name')){
+				console.log('Name has changed to ' + this.get('Name'))
+			}
+		});
+	}

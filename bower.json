@@ -1,0 +1,21 @@
+{
+  "name": "learn-backbone",
+  "version": "0.0.0",
+  "homepage": "https://github.com/klvs/",
+  "authors": [
+    "Alex Roman <Alex@romanink.net>"
+  ],
+  "description": "Testing ground for learning backbone",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.2.0"
+  }
+}
