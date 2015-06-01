@@ -23,9 +23,6 @@ db.once('open', function (callback){
 	console.log('connected to database');
 });
 
-// save data like
-// var book = new db.Book(data);
-// book.save();
 
 // creates books
 app.post('/api/books/create', function(req, res, next){
@@ -45,7 +42,7 @@ app.post('/api/books/create', function(req, res, next){
 	});
 });
 
-// list
+// list all
 app.get('/api/books', function(req, res){
 	Book.find({}, function(err, docs){
 		res.json(docs);
@@ -54,15 +51,40 @@ app.get('/api/books', function(req, res){
 
 // gets books w/ id
 app.get('/api/books/:id/', function(req, res){
-	// res.send(('id'));
-	// console.log(;
-	// res.send('temp');
-	Book.findOne({isbn:req.params.id}, function(err, doc){
+	var id = req.params.id;
+	Book.findOne( {isbn:id}, function(err, doc){
 		res.json(doc);
 	});
 });
 
-// drops db
+// update
+app.put('/api/books/:id/', function(req, res){
+	var id = req.params.id;
+	Book.find({isbn:id}, function(err, book){
+		if(err)
+			console.log('error @ /api/books/:id/')
+			res.status(400).send(err);
+
+
+		// update 
+		// book.
+	});
+});
+
+// delete
+app.delete('/api/books/:id/delete', function(req, res){
+	var id = req.params.id;
+	Book.remove({isbn:id}, function(err, removed){
+		if(err){
+			console.log('error @ /api/books/:id/delete');
+			res.status(400).send(err);
+		}
+		res.json(removed);
+	});
+});
+
+
+// drops db CAREFUL!
 app.get('/api/delete/books/', function(req, res){
 	// res.send(('id'));
 	// console.log(req.params);
