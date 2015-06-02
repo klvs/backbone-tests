@@ -21,7 +21,7 @@ var Book = Backbone.Model.extend({
 		console.log('Book\'s constructor has been called');
 		Backbone.model.apply(this, arguments);
 	},
-	urlRoot: 'http://localhost:'
+	urlRoot: 'http://localhost:8081'
 });
 
 function setAttr(model){
