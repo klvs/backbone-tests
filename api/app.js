@@ -58,16 +58,16 @@ app.get('/api/books/:id/', function(req, res){
 });
 
 // update
-app.put('/api/books/:id/', function(req, res){
+app.put('/api/books/:id/update', function(req, res){
 	var id = req.params.id;
 	Book.find({isbn:id}, function(err, book){
-		if(err)
+		if(err){
 			console.log('error @ /api/books/:id/')
 			res.status(400).send(err);
-
-
-		// update 
-		// book.
+		}
+		console.log(req.body);
+		Book.update({isbn: id}, {$set : req.body})
+		res.send(req.body);
 	});
 });
 
