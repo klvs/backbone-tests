@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 
-
-// db shit
+// start db shit //
+// NOTE: Modularize!!!
 mongoose.connect('mongodb://localhost/books')
 
 var bookSchema = new Schema({
@@ -22,7 +22,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback){
 	console.log('connected to database');
 });
-
+// end db shit//
 
 // creates books
 app.post('/api/books/', function(req, res, next){
@@ -58,7 +58,7 @@ app.get('/api/books/:id/', function(req, res){
 });
 
 // update
-app.put('/api/books/:id/', function(req, res){
+app.put('/api/books/', function(req, res){
 	var id = req.params.id;
 	Book.findOne({isbn:id}, function(err, book){
 		if(err){
