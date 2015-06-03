@@ -6,3 +6,10 @@ http://www.peachpit.com/articles/article.aspx?p=2252193&seqNum=4
 
 Info on mongoose CRUD ops
 http://scottksmith.com/blog/2014/05/05/beer-locker-building-a-restful-api-with-node-crud/
+
+
+API routes
+Create: POST http://localhost:51377/api/values
+Read: GET http://localhost:51377/api/values/{id}
+Update: PUT http://localhost:51377/api/values/{id}
+Delete: DELETE http://localhost:51377/api/values/{id}

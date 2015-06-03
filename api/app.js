@@ -25,7 +25,7 @@ db.once('open', function (callback){
 
 
 // creates books
-app.post('/api/books/create', function(req, res, next){
+app.post('/api/books/', function(req, res, next){
 	var book = new Book({
 		name:req.body.name,
 		genre:req.body.genre,
@@ -49,7 +49,7 @@ app.get('/api/books', function(req, res){
 	});
 });
 
-// gets books w/ id
+// read
 app.get('/api/books/:id/', function(req, res){
 	var id = req.params.id;
 	Book.findOne( {isbn:id}, function(err, doc){
@@ -58,23 +58,18 @@ app.get('/api/books/:id/', function(req, res){
 });
 
 // update
-app.put('/api/books/:id/update', function(req, res){
+app.put('/api/books/:id/', function(req, res){
 	var id = req.params.id;
 	Book.findOne({isbn:id}, function(err, book){
 		if(err){
 			console.log('error @ /api/books/:id/');
 			res.status(400).send(err);
 		}
-		console.log(book);
-		// Book.update({isbn: id}, req.body)
+
 		book.name = req.body.name || book.name;
-		// book.genre = req.body.genre;
-		// book.markModified('genre');
 		book.genre = req.body.genre || book.genre;
 		book.isbn = req.body.isbn || book.isbn;
-		// name: String,
-		// genre: String,
-		// isbn: String
+
 		book.save(function(err, book){
 			if(err){
 				console.log('error @ /api/books/:id/update');
@@ -86,7 +81,7 @@ app.put('/api/books/:id/update', function(req, res){
 });
 
 // delete
-app.delete('/api/books/:id/delete', function(req, res){
+app.delete('/api/books/:id/', function(req, res){
 	var id = req.params.id;
 	Book.remove({isbn:id}, function(err, removed){
 		if(err){
@@ -99,7 +94,7 @@ app.delete('/api/books/:id/delete', function(req, res){
 
 
 // drops db CAREFUL!
-app.get('/api/delete/books/', function(req, res){
+app.delete('/api/delete/books/', function(req, res){
 	// res.send(('id'));
 	// console.log(req.params);
 	// res.send('temp');
