@@ -60,14 +60,28 @@ app.get('/api/books/:id/', function(req, res){
 // update
 app.put('/api/books/:id/update', function(req, res){
 	var id = req.params.id;
-	Book.find({isbn:id}, function(err, book){
+	Book.findOne({isbn:id}, function(err, book){
 		if(err){
-			console.log('error @ /api/books/:id/')
+			console.log('error @ /api/books/:id/');
 			res.status(400).send(err);
 		}
-		console.log(req.body);
-		Book.update({isbn: id}, {$set : req.body})
-		res.send(req.body);
+		console.log(book);
+		// Book.update({isbn: id}, req.body)
+		book.name = req.body.name || book.name;
+		// book.genre = req.body.genre;
+		// book.markModified('genre');
+		book.genre = req.body.genre || book.genre;
+		book.isbn = req.body.isbn || book.isbn;
+		// name: String,
+		// genre: String,
+		// isbn: String
+		book.save(function(err, book){
+			if(err){
+				console.log('error @ /api/books/:id/update');
+				res.status(400).send(err);
+			}
+			res.status(201).json(book);
+		});
 	});
 });
 
@@ -98,8 +112,6 @@ app.get('/api/delete/books/', function(req, res){
 		}
 	});
 });
-
-
 
 app.listen('8081');
 console.log('party on port 8081');
