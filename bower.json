@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "backbone": "~1.2.0"
+    "backbone": "~1.2.0",
+    "jQuery": "~2.1.4"
   }
 }
