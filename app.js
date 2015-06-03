@@ -1,42 +1,97 @@
 var Book = Backbone.Model.extend({
 	defaults: {
-	        ID: '',
-	        Name: ''
-	    },  
-	amDed: function(){
-		alert('i, ' + this.get('Name') + ' am ded');
-	},
+	        isbn: '',
+	        name: ''
+	},  
+	// amDed: function(){
+	// 	alert('i, ' + this.get('name') + ' am ded');
+	// },
+	// idAttribute: 'isbn',
 	initialize: function(){
-		console.log(this.get('Name') + 'has been initialized');
+		console.log(this.get('name') + 'has been initialized');
 		this.on('change', function(){
-			if(this.hasChanged('ID')){
-				console.log('ID has changed');
+			if(this.hasChanged('isbn')){
+				console.log('isbn has changed');
 			}
-			if(this.hasChanged('Name')){
-				console.log('Name has changed to ' + this.get('Name'))
+			if(this.hasChanged('name')){
+				console.log('name has changed to ' + this.get('name'))
 			}
 		});
 	},
 	constructor: function(attributes, options){
 		console.log('Book\'s constructor has been called');
-		Backbone.model.apply(this, arguments);
+		Backbone.Model.apply(this, arguments);
 	},
-	urlRoot: 'http://localhost:8081'
+	validate: function(attr){
+		if(!attr.isbn){
+			return "Invalid isbn provided";
+		}
+	},
+	urlRoot: 'http://localhost:8081/api/books'
 });
 
-function setAttr(model){
-	model.set('Name', 'poophed');
-	model.set('ID', 4);
-}
 
-var book = new Book();
-book.set('ID', 3);
-book.set('Name', 'Johnny');
+var book = new Book({
+	name: "Backbone 101",
+	genre: "non-fiction",
+	isbn: 154543
+});
 
-// book.destroy({
-// 	success: function(){
-// 		console.log('fuck shit poop');
-// 	}
+/* 
+	Create
+	works with idAttribute line disabled
+*/
+book.save({}, {
+    success: function (model, respose, options) {
+        console.log("The model has been saved to the server");
+    },
+    error: function (model, xhr, options) {
+        console.log("Something went wrong while saving the model");
+    }
+});
+
+
+/* 
+	Read 
+	works with idAttribute line enabled
+*/
+// book.fetch({
+//     success: function (bookResponse) {
+//         console.log("Found the book: " + bookResponse.get("name"));
+//     }
 // });
 
-// book.amDed();
+/* 
+	Update 
+	updates name only 
+	works with idAttribute line disabled
+*/
+// book.fetch({
+//     success: function (bookResponse) {
+//         console.log("Found the book: " + bookResponse.get("name"));
+//         // Let us update this retreived book now (doing it in the callback) [UPDATE]
+//         bookResponse.set("name", bookResponse.get("name") + "_updated");
+//         bookResponse.save({}, {
+//             success: function (model, respose, options) {
+//                 console.log("The model has been updated to the server");
+//             },
+//             error: function (model, xhr, options) {
+//                 console.log("Something went wrong while updating the model");
+//             }
+//         });
+//     }
+// });
+
+/* 
+	Delete
+	updates name only 
+	works with idAttribute line disabled
+*/
+// book.destroy({
+//     success: function (model, respose, options) {
+//         console.log("The model has deleted the server");
+//     },
+//     error: function (model, xhr, options) {
+//         console.log("Something went wrong while deleting the model");
+//     }
+// });
