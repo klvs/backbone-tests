@@ -13,7 +13,8 @@ mongoose.connect('mongodb://localhost/books')
 var bookSchema = new Schema({
 	name: String,
 	genre: String,
-	isbn: String
+	isbn: String,
+	// id: String
 });
 
 var Book = mongoose.model('Book', bookSchema);
@@ -52,15 +53,16 @@ app.get('/api/books', function(req, res){
 // read
 app.get('/api/books/:id/', function(req, res){
 	var id = req.params.id;
-	Book.findOne( {isbn:id}, function(err, doc){
+	// Book.findOne( {id:id}, function(err, doc){
+	Book.findById(id, function(err, doc){
 		res.json(doc);
 	});
 });
 
 // update
-app.put('/api/books/', function(req, res){
+app.put('/api/books/:id', function(req, res){
 	var id = req.params.id;
-	Book.findOne({isbn:id}, function(err, book){
+	Book.findById(id, function(err, book){
 		if(err){
 			console.log('error @ /api/books/:id/');
 			res.status(400).send(err);
@@ -83,7 +85,7 @@ app.put('/api/books/', function(req, res){
 // delete
 app.delete('/api/books/:id/', function(req, res){
 	var id = req.params.id;
-	Book.remove({isbn:id}, function(err, removed){
+	Book.findById(id, function(err, removed){
 		if(err){
 			console.log('error @ /api/books/:id/delete');
 			res.status(400).send(err);
