@@ -84,11 +84,13 @@ app.put('/api/books/:id', function(req, res){
 
 // delete
 app.delete('/api/books/:id/', function(req, res){
+	// console.log('test');
 	var id = req.params.id;
+	// console.log(id);
 	Book.findById(id).remove(function(err, removed){
 		if(err){
 			console.log('error @ /api/books/:id delete');
-			res.status('201')
+			res.status('400').send(err);
 		}
 		res.status(201).json(removed);
 	});

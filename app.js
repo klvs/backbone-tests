@@ -3,10 +3,7 @@ var Book = Backbone.Model.extend({
 	        isbn: '',
 	        name: ''
 	},  
-	// amDed: function(){
-	// 	alert('i, ' + this.get('name') + ' am ded');
-	// },
-	// idAttribute: 'isbn',
+	idAttribute: '_id',
 	initialize: function(){
 		console.log(this.get('name') + 'has been initialized');
 		this.on('change', function(){
@@ -32,45 +29,43 @@ var Book = Backbone.Model.extend({
 
 
 var book = new Book({
-	name: "Demo for Nima",
-	genre: "non-fiction",
-	isbn: 935856
+	// name: "Testing a Model: A Novel",
+	// genre: "Occult Instructional",
+	// isbn: 684655,
+	_id: "5577df9dcc29878b499a6c0e"
 });
 
 /* 
 	Create
-	works with idAttribute line disabled
 */
-book.save({}, {
-    success: function (model, respose, options) {
-        console.log("The model has been saved to the server");
-    },
-    error: function (model, xhr, options) {
-        console.log("Something went wrong while saving the model");
-    }
-});
+// book.save({}, {
+//     success: function (model, respose, options) {
+//         console.log("The model has been saved to the server");
+//     },
+//     error: function (model, xhr, options) {
+//         console.log("Something went wrong while saving the model");
+//     }
+// });
 
 
 /* 
 	Read 
-	works with idAttribute line enabled
 */
 // book.fetch({
 //     success: function (bookResponse) {
 //         console.log("Found the book: " + bookResponse.get("name"));
+//         console.log(bookResponse.get('_id'));
 //     }
 // });
 
 /* 
 	Update 
-	updates name only 
-	works with idAttribute line disabled
 */
 // book.fetch({
 //     success: function (bookResponse) {
 //         console.log("Found the book: " + bookResponse.get("name"));
 //         // Let us update this retreived book now (doing it in the callback) [UPDATE]
-//         bookResponse.set("name", bookResponse.get("name") + "_updated");
+//         bookResponse.set("isbn", 88888);
 //         bookResponse.save({}, {
 //             success: function (model, respose, options) {
 //                 console.log("The model has been updated to the server");
@@ -84,12 +79,10 @@ book.save({}, {
 
 /* 
 	Delete
-	updates name only 
-	works with idAttribute line disabled
 */
 // book.destroy({
 //     success: function (model, respose, options) {
-//         console.log("The model has deleted the server");
+//         console.log("The model has been deleted from the server");
 //     },
 //     error: function (model, xhr, options) {
 //         console.log("Something went wrong while deleting the model");
