@@ -32,9 +32,9 @@ var Book = Backbone.Model.extend({
 
 
 var book = new Book({
-	name: "Backbone 101",
+	name: "Demo for Nima",
 	genre: "non-fiction",
-	isbn: 154543
+	isbn: 935856
 });
 
 /* 

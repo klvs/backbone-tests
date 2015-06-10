@@ -85,12 +85,12 @@ app.put('/api/books/:id', function(req, res){
 // delete
 app.delete('/api/books/:id/', function(req, res){
 	var id = req.params.id;
-	Book.findById(id, function(err, removed){
+	Book.findById(id).remove(function(err, removed){
 		if(err){
-			console.log('error @ /api/books/:id/delete');
-			res.status(400).send(err);
+			console.log('error @ /api/books/:id delete');
+			res.status('201')
 		}
-		res.json(removed);
+		res.status(201).json(removed);
 	});
 });
 
@@ -104,9 +104,8 @@ app.delete('/api/delete/books/', function(req, res){
 		if(err){
 			console.log('error @ /api/books/cleardb');
 			res.status(400).send('error');
-		} else {
-			res.json(removed);
 		}
+		res.status(201).json(removed);
 	});
 });
 
