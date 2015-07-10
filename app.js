@@ -5,7 +5,7 @@ var Book = Backbone.Model.extend({
 	},  
 	idAttribute: '_id',
 	initialize: function(){
-		console.log(this.get('name') + 'has been initialized');
+		console.log(this.get('name') + ' has been initialized');
 		this.on('change', function(){
 			if(this.hasChanged('isbn')){
 				console.log('isbn has changed');
@@ -136,30 +136,33 @@ var book1 = new Book({
 	name: "Testing a Model: A Novel",
 	// genre: "Occult Instructional",
 	// isbn: 684655,
-	_id: "5577df9dcc29878b499a6c0e"
+	// _id: "5577df9dcc29878b499a6c0e"
 });
 var bookView = Backbone.View.extend({
-	// initialize: function(){
-	// 	console.log('Sample view has been initialized');
-	// },
-	tagname: 'li',
 	model: Book,
+	template: '',
+	tagName: 'span',
+	initialize: function(){
+		this.template = _.template($('#bookItem').html());
+	},
 	render: function(){
-		this.$el.html('<li>' + this.model.get("name") + '</li>');
+		this.$el.html(this.template(this.model.attributes));
 		return this;
 	}
 });
 
 // var view1 = new bookView({model: book1});
-// var view1 = new bookView({el: $('#sampleDiv')});
+// var view1 = new bookView({
+// 	el: $('#testDiv'),
+// 	model: book1
+// });
 // var view1 = new bookView();
 
 var bookListView = Backbone.View.extend({
 	model: BooksCollection,
-
+	// tagName: 'li',
 	render: function(){
 		this.$el.html();
-		var self = this;
 		for(var i = 0; i < this.model.length; i++){
 			// create book view to render
 			var m_bookView = new bookView({model: this.model.at(i)});
@@ -181,14 +184,16 @@ var book4 = new Book({ _id: 4, name: "Book 4" });
 var book5 = new Book({ _id: 5, name: "Book 5" });
 var bookCollection = new BooksCollection([book1, book2, book3, book4, book5]);
 
-
-// var bookList = null;
+var bookList = null;
 
 $(document).ready(function () {
-    bookList = new bookListView({ el: $("#bookList"), model: bookCollection });
+    bookList = new bookListView({ 
+    	el: $("#testDiv"), 
+    	model: bookCollection 
+    });
     bookList.render();
+    // view1.render();
 });
-
 
 
 
